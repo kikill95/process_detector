@@ -1,4 +1,4 @@
-Const HKLM = &H80000002 'HKEY_LOCAL_MACHINE
+HKLM = &H80000002 'HKEY_LOCAL_MACHINE
 strComputer = "."
 strKey = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"
 strEntry1a = "DisplayName"
@@ -41,35 +41,71 @@ For Each strSubkey In arrSubkeys
   End If
 Next
 
-strKeyOthers = "SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\"
+strKey = "SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\"
 
 Set objReg = GetObject("winmgmts://" & strComputer & _
  "/root/default:StdRegProv")
-objReg.EnumKey HKLM, strKeyOthers, arrSubkeys
+objReg.EnumKey HKLM, strKey, arrSubkeys
 WScript.Echo "Installed Applications" & VbCrLf
 For Each strSubkey In arrSubkeys
-  intRet1 = objReg.GetStringValue(HKLM, strKeyOthers & strSubkey, _
+  intRet1 = objReg.GetStringValue(HKLM, strKey & strSubkey, _
    strEntry1a, strValue1)
   If intRet1 <> 0 Then
-    objReg.GetStringValue HKLM, strKeyOthers & strSubkey, _
+    objReg.GetStringValue HKLM, strKey & strSubkey, _
      strEntry1b, strValue1
   End If
   If strValue1 <> "" Then
     WScript.Echo VbCrLf & "Display Name: " & strValue1
   End If
-  objReg.GetStringValue HKLM, strKeyOthers & strSubkey, _
+  objReg.GetStringValue HKLM, strKey & strSubkey, _
    strEntry2, strValue2
   If strValue2 <> "" Then
     WScript.Echo "Install Date: " & strValue2
   End If
-  objReg.GetDWORDValue HKLM, strKeyOthers & strSubkey, _
+  objReg.GetDWORDValue HKLM, strKey & strSubkey, _
    strEntry3, intValue3
-  objReg.GetDWORDValue HKLM, strKeyOthers & strSubkey, _
+  objReg.GetDWORDValue HKLM, strKey & strSubkey, _
    strEntry4, intValue4
   If intValue3 <> "" Then
      WScript.Echo "Version: " & intValue3 & "." & intValue4
   End If
-  objReg.GetDWORDValue HKLM, strKeyOthers & strSubkey, _
+  objReg.GetDWORDValue HKLM, strKey & strSubkey, _
+   strEntry5, intValue5
+  If intValue5 <> "" Then
+    WScript.Echo "Estimated Size: " & Round(intValue5/1024, 3) & " megabytes"
+  End If
+Next
+
+HKLM = &H80000001 'HKEY_CURRENT_USER
+strKey = "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\"
+
+Set objReg = GetObject("winmgmts://" & strComputer & _
+ "/root/default:StdRegProv")
+objReg.EnumKey HKLM, strKey, arrSubkeys
+WScript.Echo "Installed Applications" & VbCrLf
+For Each strSubkey In arrSubkeys
+  intRet1 = objReg.GetStringValue(HKLM, strKey & strSubkey, _
+   strEntry1a, strValue1)
+  If intRet1 <> 0 Then
+    objReg.GetStringValue HKLM, strKey & strSubkey, _
+     strEntry1b, strValue1
+  End If
+  If strValue1 <> "" Then
+    WScript.Echo VbCrLf & "Display Name: " & strValue1
+  End If
+  objReg.GetStringValue HKLM, strKey & strSubkey, _
+   strEntry2, strValue2
+  If strValue2 <> "" Then
+    WScript.Echo "Install Date: " & strValue2
+  End If
+  objReg.GetDWORDValue HKLM, strKey & strSubkey, _
+   strEntry3, intValue3
+  objReg.GetDWORDValue HKLM, strKey & strSubkey, _
+   strEntry4, intValue4
+  If intValue3 <> "" Then
+     WScript.Echo "Version: " & intValue3 & "." & intValue4
+  End If
+  objReg.GetDWORDValue HKLM, strKey & strSubkey, _
    strEntry5, intValue5
   If intValue5 <> "" Then
     WScript.Echo "Estimated Size: " & Round(intValue5/1024, 3) & " megabytes"
