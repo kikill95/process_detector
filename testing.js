@@ -41,7 +41,6 @@ exec(cmd, (error, stdout, stderr) => {
 //   })
 // }
 
-
 // function killProcessOsx () {
 //   if (blockedProgramsArray.length > 0) {
 //     let cmd = 'killall '
