@@ -9,5 +9,5 @@ if ($path -ne "") {
     ('[' + ($shortcuts | foreach-object { ($WshShell.CreateShortcut($_.FullName) | ConvertTo-Json) + ',' }) | %{$_.Substring(0, $_.length - 1) }) + ']'
     # For each file, pass the fullname to the COM object to open the shortcut and enumerate the properties
 } else {
-    write-output "No arguments specified, please use either -p to specify a path or -f for a specific .lnk file"
+    write-output "No arguments specified, please use either -p to specify a path"
 }
