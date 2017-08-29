@@ -4,18 +4,16 @@ Bourne shell
 
 Powershell
 
-     powershell -executionpolicy bypass -File ./script.ps1 -p /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/
+     powershell -executionpolicy bypass -File ./script.ps1 -p _path_
 
-     powershell -executionpolicy bypass -File ./script.ps1 -p ~/AppData/Roaming/Microsoft/Windows/Start\ Menu/Programs/
-    
-Powershell to JSON file
+Output of command to JSON file
 
-    powershell -executionpolicy bypass -File ./script.ps1 -p /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs/ > installed_apps.json
+    _cmd_ > file.json
 
-Start menu
+Start menu directory
 
-    cd /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs
-    
+    /c/ProgramData/Microsoft/Windows/Start\ Menu/Programs
+
 Or
 
-    cd ~/AppData/Roaming/Microsoft/Windows/Start\ Menu/Programs/
+    ~/AppData/Roaming/Microsoft/Windows/Start\ Menu/Programs/
